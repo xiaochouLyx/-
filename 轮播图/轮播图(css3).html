@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>轮播图(css3)</title>
+	<style type="text/css">
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		.big {
+			height: 400px;
+			width: 500px;
+			overflow: hidden;
+			position: absolute;
+			top: 100px;
+			left: 500px;
+		}
+		.small {
+			height: 400px;
+			width: 2500px;
+			position: absolute;             /*必不可少*/
+			animation: donghua 5s ease-out infinite normal;
+		}
+		.small img {
+			width: 500px;
+			height: 400px;
+			float: left;                   /*必不可少*/        
+		}
+		.big:hover .small {
+			animation-play-state: paused;
+		}
+		@keyframes donghua {
+			0% {
+				left: 0;
+			}
+			25% {
+				left: -500px;
+			}
+			50% {
+				left: -1000px;
+			}
+			75% {
+				left: -1500px;
+			}
+			100% {
+				left: -2000px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="big">
+		<div class="small">
+			<img src="./img/nvnv.jpg">
+			<img src="./img/xiaohuang.jpg">
+			<img src="./img/xiaohei.jpg">
+			<img src="./img/xiaozong.jpg">
+			<img src="./img/nvnv.jpg">
+		</div>
+	</div>
+</body>
+</html>

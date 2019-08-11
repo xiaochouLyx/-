@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>轮播图(js)</title>
+	<style type="text/css">
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		.big {
+			height: 600px;
+			width: 500px;
+			position: absolute;
+			overflow: hidden;
+			top: 20px;
+			left: 500px;
+		}
+		.small img {
+			width: 500px;
+			height: 600px;      
+		}
+		.pic li {
+			float: left;
+		}
+		.sbutton {
+			position: absolute;
+			top: 530px;
+			width: 200px;
+			height: 50px;
+			left: 170px;
+		}
+		.sbutton li {
+			width: 30px;
+			height: 20px;
+			margin-right: 10px;
+			margin-top: 20px;
+			background-color: #9e9e9e4f;
+			color: white;
+			list-style-type: none;
+			text-align: center;
+			float: left;
+			cursor: pointer;
+		}
+		.imgs.picxiao {
+			display: none;
+		}
+		.imgs.picxian {
+			display: block;
+		}
+		.left,.right {
+			width: 50px;
+			height: 50px;
+			background-color: #9e9e9e4f;
+			font-size: 40px;
+			text-align: center;
+			font-weight: bold;
+			position: absolute;
+			top: 370px;
+			cursor: pointer;
+		}
+		.left {
+			left: 0;
+		}
+		.right {
+			right: 0;
+		}
+	</style>
+</head>
+<body>
+	<div class="big" id="big">
+		<div class="small" id="small">
+			<ul id="pic">
+				<li class="imgs"><img src="./img/nvnv.jpg"></li>
+				<li class="imgs"><img src="./img/xiaohuang.jpg"></li>
+				<li class="imgs"><img src="./img/xiaohei.jpg"></li>
+				<li class="imgs"><img src="./img/xiaozong.jpg"></li>
+			</ul>
+			<ul class="sbutton" id="pointlist">
+				<li class="point">1</li>
+				<li class="point">2</li>
+				<li class="point">3</li>
+				<li class="point">4</li>
+			</ul>
+		</div>
+		<div class="lr">
+			<span class="left" id="left"><</span>
+			<span class="right" id="right">></span>
+		</div>
+	</div>
+	<script type="text/javascript">
+		window.onload= function() {
+			var index = 0;         //图片的索引，表示第几张图片；  
+			var pointlist = document.getElementById("pointlist");   //包含点的ul
+			var liall = document.getElementsByClassName("point");  //点的集合
+			var imgs = document.getElementsByClassName("imgs");  //所有图片
+			var spans = document.getElementsByTagName("span");
+			var left = document.getElementById("left");          //左按钮
+			var right = document.getElementById("right");		 //右按钮
+			var small = document.getElementById("small"); 		 //包起来的那个大框
+			liall[0].style.color="black";
+
+			//计时器，实现自动轮播；
+			var jishi = setInterval(xunhuan,1000);
+
+			//自动轮播
+			function xunhuan() {
+				
+				if(index >= liall.length-1) {
+					index= -1;
+				}
+				//console.log(index+1);
+				index = index + 1;   //自加，实现自动跳转；
+				change1(index);       
+			}
+
+			pointlist.addEventListener("mouseover",function() {             //实现当鼠标移动到div上时，清除计时器，使不再自动轮播； 方便点击点和左右按钮；
+				clearInterval(jishi);
+			});
+
+			pointlist.addEventListener("mouseout",function() {
+				jishi = setInterval(xunhuan,1000);          //不能设置var jishi; 具体原因之后探究； 查到的说法是 ： 会再重新创建运行一次setInterval函数
+			});
+
+			for(var i=0;i<imgs.length;i++) {
+				imgs[i].addEventListener("mouseover",function() {        
+					clearInterval(jishi);
+				});
+
+				imgs[i].addEventListener("mouseout",function() {
+					jishi = setInterval(xunhuan,1000);         
+				});
+			}
+
+			for(var i=0;i<spans.length;i++) {
+				spans[i].addEventListener("mouseover",function() {   clearInterval(jishi);
+				});
+
+				spans[i].addEventListener("mouseout",function() {
+					jishi = setInterval(xunhuan,1000);
+				})
+			}
+
+			function change1() {   //改变样式，即实现跳转图片
+
+				for(var m=0;m<liall.length;m++) {                 //将所有的设置为一样的
+					imgs[m].className = "picxiao imgs";
+					liall[m].style.color = "white";
+				}											//为当前图片设置特定的样式
+				imgs[index].className = "picxian imgs";
+				liall[index].style.color = "black";
+
+			}
+
+			//手动轮播 实现底下按钮控制
+			for(var i=0;i<liall.length;i++) {
+				liall[i].addEventListener("click",function(event) {
+					var target = event.target;
+					for(var j=0;j<liall.length;j++) {
+						if(target == liall[j]) {
+							index=j;
+							change1();
+						}
+					}
+				});
+			}
+			
+			//实现左右按钮控制
+			spans[1].addEventListener("click",function() {
+               //当实现任何点击事件，改变图片的顺序时，都注意要加上clearInterval();
+			 	if(index < 3){            
+					index = index+1;
+				}
+				else {
+					index = 0;	
+				}
+				change1();
+			});
+			spans[0].addEventListener("click",function() {
+				if(index > 0) {
+					index=index - 1;
+				}else{
+					index=3;
+				}
+				change1();
+			});
+		}
+	</script>
+</body>
+</html>

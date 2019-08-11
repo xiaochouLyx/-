@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jquery轮播图</title>
+	<style type="text/css">
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		.big {
+			height: 600px;
+			width: 500px;
+			position: absolute;
+			overflow: hidden;
+			top: 20px;
+			left: 500px;
+		}
+		.small img {
+			width: 500px;
+			height: 600px;      
+		}
+		.pic li {
+			float: left;
+		}
+		.sbutton {
+			position: absolute;
+			top: 530px;
+			width: 200px;
+			height: 50px;
+			left: 170px;
+		}
+		.sbutton li {
+			width: 30px;
+			height: 20px;
+			margin-right: 10px;
+			margin-top: 20px;
+			background-color: #9e9e9e4f;
+			color: white;
+			list-style-type: none;
+			text-align: center;
+			float: left;
+			cursor: pointer;
+		}
+		.left,.right {
+			width: 50px;
+			height: 50px;
+			background-color: #9e9e9e4f;
+			font-size: 40px;
+			text-align: center;
+			font-weight: bold;
+			position: absolute;
+			top: 370px;
+			cursor: pointer;
+		}
+		.left {
+			left: 0;
+		}
+		.right {
+			right: 0;
+		
+	</style>
+</head>
+<body>
+<div class="big">
+	<div class="small" id="small">
+		<ul id="pic">
+			<li class="imgs"><img src="./img/nvnv.jpg"></li>
+			<li class="imgs"><img src="./img/xiaohuang.jpg"></li>
+			<li class="imgs"><img src="./img/xiaohei.jpg"></li>
+			<li class="imgs"><img src="./img/xiaozong.jpg"></li>
+		</ul>
+		<ul class="sbutton" id="pointlist">
+			<li class="point">1</li>
+			<li class="point">2</li>
+			<li class="point">3</li>
+			<li class="point">4</li>
+		</ul>
+	</div>
+	<div class="lr">
+		<span class="left" id="left"><</span>
+		<span class="right" id="right">></span>
+	</div>
+</div>
+
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var index = 0;
+			$(".point").eq(0).css("color","black");
+			$(".imgs").eq(0).css("display","block");
+			/*$("body").evertTime("1s",xunhuan);*/
+			var jishi = setInterval(xunhuan,1000);
+
+			//自动轮播
+			function xunhuan() {
+				if (index >=3 ) {
+					index= -1;
+				}
+				index=index+1;
+				change1();
+			}
+
+			$("#pointlist").mouseenter(function() {
+				clearInterval(jishi);
+			}).mouseleave(function(){
+				jishi = setInterval(xunhuan,1000);
+			});
+
+			for(i=0;i<4;i++) {
+				$(".imgs").eq(i).mouseenter(function() {
+				clearInterval(jishi);
+			}).mouseleave(function(){
+				jishi = setInterval(xunhuan,1000);
+			});
+			}
+
+			for(i=0;i<2;i++) {
+				$("span").eq(i).mouseenter(function() {
+				clearInterval(jishi);
+			}).mouseleave(function(){
+				jishi = setInterval(xunhuan,1000);
+			});
+			}
+
+			function change1() {
+				$("li.imgs").css("display","none");
+				$("li.point").css("color","white");
+				$(".imgs").eq(index).css("display","block");
+				$(".point").eq(index).css("color","black");
+			}
+
+			//手动轮播
+			for(var i=0;i<4;i++) {
+				$(".point").eq(i).click(function() {
+					index = $(this).index();
+					change1();
+				});
+			}
+
+			//实现左右跳转
+			$("#right").click(function() {
+				if(index<3){     
+					index=index+1;
+				}
+				else {
+					index = 0;	
+				}
+				change1();
+			});
+			$("#left").click(function() {
+				if(index > 0) {
+					index=index-1;
+				}else{
+					index=3;
+				}
+				change1();
+			});
+		});
+	</script>
+</body>
+</html>

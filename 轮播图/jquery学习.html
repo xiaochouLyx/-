@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<script type="text/javascript">
+	//jQuery选择器  jquery中所有选择器均以$()开头；
+	$("p");   //在页面中选取所有p元素
+
+	$(document).ready(function() {
+		$("button").click(function() {
+			$("p").hide();
+		});
+	});
+
+	//id选择器
+	$("#test");
+	//class选择器
+	$(".test");
+
+	$("*");  //选取所有元素；
+	$(this); //选取当前HTML元素；
+	$("p.intro");
+	$("p:first");
+	$("ul li:first") //选取第一个ul元素的第一个li元素；
+	$("ul li:first-child") //选取每个ul元素的第一个li元素
+
+
+	//事件
+	//jQuery 点击事件
+	$("p").click();
+
+	$(document).ready();
+	$("p").dblclick();
+
+	$("p").mouseenter();
+	$("p").mouseleave();
+
+
+	//jquery语法
+	$(selector).action();
+	//简洁写法
+	$(function() {
+
+	});
+
+
+	//获取内容和属性
+	text() //设置或返回所选元素的文本内容；
+	html() 
+	//设置或返回所选元素的内容（包括html标记）
+	val() //设置或返回表单字段的值；
+	attr() //用于获取属性值；
+
+
+	//设置内容和属性
+
+
+	//获取并设置css类
+	addClass() //向被选元素添加一个或多个类；
+	removeClass() //从被选元素删除一个或多个类；
+	toggleClass() //对被选元素进行添加/删除类的切换操作
+	css() //设置或返回样式属性
+
+
+
+	//jQuery遍历
+	parent()   //直接父元素；
+	parents()    //所有祖先元素；可以加设定
+	parentsUntil();   //可以设定介于两个元素之间的祖先元素；
+
+	children()
+	find()
+
+	//同胞元素
+	siblings() //返回被选元素的所有同胞元素；
+	next()
+	nextAll()
+	nextUntil()
+
+	//过滤
+	first()
+	last()
+	eq()   //索引
+
+
+	//计时器
+	everyTime();
+	
+	</script>
+</body>
+</html>
